@@ -7,12 +7,14 @@ test("contact form renders without crashing", () => {
 });
 
 test("contact form adds new contact details to screen", () => {
-    const { getByLabelText, findByRole, findAllByText } = render(<ContactForm />)
+    const { getByLabelText, findByRole } = render(<ContactForm />)
 
     const firstNameInput = getByLabelText(/first name/i);
     const lastNameInput = getByLabelText(/last name/i);
     const emailInput = getByLabelText(/email/i);
     const messageInput = getByLabelText(/message/i);
+    const titleInput = getByLabelText(/title/i);
+    const subscribedInput = getByLabelText(/Subscribe to our mailing list/i);
 
     fireEvent.change(firstNameInput, {
         target: { name: 'firstName', value: 'Elysia'}
@@ -24,6 +26,12 @@ test("contact form adds new contact details to screen", () => {
     })
     fireEvent.change(messageInput, {
         target: { name: 'message', value: 'Hi there. Let\'s get lunch'}
+    })
+    fireEvent.change(titleInput, {
+        target: { name: 'title', value: 'Dr'}
+    })
+    fireEvent.change(subscribedInput, {
+        target: { name: 'subscribed', value: 'yes'}
     })
 
     findByRole('button').then((res) => {
