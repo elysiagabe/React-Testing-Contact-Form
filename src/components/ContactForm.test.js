@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, findAllByText } from '@testing-library/react';
 import ContactForm from './ContactForm';
 
 test("contact form renders without crashing", () => {
@@ -7,7 +7,7 @@ test("contact form renders without crashing", () => {
 });
 
 test("contact form adds new contact details to screen", () => {
-    const { getByLabelText, getByText, findByRole } = render(<ContactForm />)
+    const { getByLabelText, findByRole, findAllByText } = render(<ContactForm />)
 
     const firstNameInput = getByLabelText(/first name/i);
     const lastNameInput = getByLabelText(/last name/i);
@@ -17,8 +17,7 @@ test("contact form adds new contact details to screen", () => {
     fireEvent.change(firstNameInput, {
         target: { name: 'firstName', value: 'Elysia'}
     })
-    fireEvent.change(lastNameInput, {
-        target: { name: 'lastName', value: 'Gabe'}
+    fireEvent.change(lastNameInput, {target: { name: 'lastName', value: 'Gabe'}
     })
     fireEvent.change(emailInput, {
         target: { name: 'email', value: 'elysiagabe@gmail.com'}
@@ -27,9 +26,12 @@ test("contact form adds new contact details to screen", () => {
         target: { name: 'message', value: 'Hi there. Let\'s get lunch'}
     })
 
-    const submitButton = findByRole("button");
+    findByRole('button').then((res) => {
+        fireEvent.click(res);
+    })
 
-    fireEvent.click(submitButton);
 
+    
 
+    
 })
